@@ -10,7 +10,6 @@ try {
     $sql->bindValue(':id', $id);
     $sql->execute();
 
-
     $info = $sql->fetch(PDO::FETCH_ASSOC);
 
     if ($info) {
@@ -20,7 +19,6 @@ try {
       $ValorDesp = $info['Valor_Despesa'];
       $DataDesp = $info['Data_Despesa'];
       $SituacaoDesp = $info['Situação_Despesa'];
-
     } else {
       echo "Usuário não encontrado";
     }
@@ -31,46 +29,89 @@ try {
 } catch (PDOException $e) {
   echo 'Erro na execução da consulta: ' . $e->getMessage();
 }
-
-
 ?>
 
-<h1>Editar Despesas</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Despesas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        h1 {
+          font-size: 24px;
+          font-weight: bold;
+          color: #007bff; /* Cor azul do Bootstrap */
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
 
-<form method="POST" action="editar_action.php">
-  <input type="hidden" name="id" value="<?php echo $UserId; ?>">
-  
-  <label for="D">
-    Nome Despesa:<br/>
-    <input type="text" name="Nome" id="D" value="<?php echo $NameDesp; ?>" />
-  </label><br/><br/>
 
-  <label>
-    Tipo Despesa:<br/>
-    <select name="Tipo">
-      <option value="1" <?php echo ($TipoDesp == 'Mensal') ? 'selected' : ''; ?>>Mensal</option>
-      <option value="2" <?php echo ($TipoDesp == 'Alimentos') ? 'selected' : ''; ?>>Alimentos</option>
-      <option value="3" <?php echo ($TipoDesp == 'Gastos Avulsos') ? 'selected' : ''; ?>>Gastos Avulsos</option>
-    </select>
-  </label><br/><br/>
+    <div class="text-center">
+        <h1 class="mt-4">Editar Despesas</h1>
+    </div>
 
-  <label for="E">
-    Valor Despesa:<br/>
-    <input type="number" name="Valor" id="E" max="5000" value="<?php echo $ValorDesp; ?>"/>
-  </label><br/><br/>
+    <form method="POST" action="editar_action.php">
+        <input type="hidden" name="id" value="<?php echo $UserId; ?>">
 
-  <label for="F">
-    Data Despesa:<br/>
-    <input type="date" name="Data" id="F" value="<?php echo $DataDesp; ?>"/>
-  </label><br/><br/>
+        <div class="form-group">
+            <label for="D">Nome Despesa:</label>
+            <input type="text" class="form-control" name="Nome" id="D" value="<?php echo $NameDesp; ?>" />
+        </div>
 
-  <label>
-    Situação Despesa:<br/>
-    <select name="Situacao">
-      <option value="4" <?php echo ($SituacaoDesp == 'Pago') ? 'selected' : ''; ?>>Pago</option>
-      <option value="5" <?php echo ($SituacaoDesp == 'Pendente Pagamento') ? 'selected' : ''; ?>>Pendente Pagamento</option>
-    </select>
-  </label><br/><br/>
+        <div class="form-group">
+            <label>Tipo Despesa:</label>
+            <select class="form-control" name="Tipo">
+                <option value="1" <?php echo ($TipoDesp == 'Mensal') ? 'selected' : ''; ?>>Mensal</option>
+                <option value="2" <?php echo ($TipoDesp == 'Alimentos') ? 'selected' : ''; ?>>Alimentos</option>
+                <option value="3" <?php echo ($TipoDesp == 'Gastos Avulsos') ? 'selected' : ''; ?>>Gastos Avulsos</option>
+            </select>
+        </div>
 
-  <input type="submit" value="Salvar" class="button" />
-</form>
+        <div class="form-group">
+            <label for="E">Valor Despesa:</label>
+            <input type="number" class="form-control" name="Valor" id="E" max="5000" value="<?php echo $ValorDesp; ?>"/>
+        </div>
+
+        <div class="form-group">
+            <label for="F">Data Despesa:</label>
+            <input type="date" class="form-control" name="Data" id="F" value="<?php echo $DataDesp; ?>"/>
+        </div>
+
+        <div class="form-group">
+            <label>Situação Despesa:</label>
+            <select class="form-control" name="Situacao">
+                <option value="4" <?php echo ($SituacaoDesp == 'Pago') ? 'selected' : ''; ?>>Pago</option>
+                <option value="5" <?php echo ($SituacaoDesp == 'Pendente Pagamento') ? 'selected' : ''; ?>>Pendente Pagamento</option>
+            </select>
+        </div>
+
+        <input type="submit" value="Salvar" class="btn btn-primary button" />
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
